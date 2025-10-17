@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Avant Garde Book BT";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/public/fonts/Avgardd.ttf") format("woff");
+}
+body {
+  margin: 0px;
+  font-family: "Avant Garde Book BT", sans-serif;
+}
+
+@theme {
+  --color-primary: #092c4e;
+  --color-secondary: #f0af54;
+  --color-detail: #ccc3bc;
+  --color-white: #f5f3f0; /* blanco cremoso, cálido y suave */
+  --color-black: #1c1c1c; /* negro no tan oscuro, más amigable */
+}
+
+.nav-underline {
+  position: relative;
+}
+
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: #ccc3bc;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-underline:hover::after {
+  transform: scaleX(1);
+}
+
+::selection {
+  background: var(--color-secondary);
+  color: var(--color-black);
+}
+
+::-moz-selection {
+  background: var(--color-secondary);
+  color: var(--color-black);
+}
