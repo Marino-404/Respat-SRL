@@ -47,7 +47,7 @@ const Services = () => {
 
   // Variants para cards
   const cardVariants: Variants = isMobile
-    ? { hidden: {}, visible: {} } // Sin animación en mobile
+    ? { hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } } // Sin animación en mobile
     : {
         hidden: { opacity: 0, y: 40 },
         visible: {
@@ -59,7 +59,7 @@ const Services = () => {
 
   // Variants para container
   const containerVariants: Variants = isMobile
-    ? { hidden: {}, visible: {} }
+    ? { hidden: {}, visible: {} } // No hay stagger en mobile
     : { hidden: {}, visible: { transition: { staggerChildren: 0.2 } } };
 
   return (
@@ -76,7 +76,7 @@ const Services = () => {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl"
         variants={containerVariants}
         initial="hidden"
-        whileInView={isMobile ? undefined : "visible"}
+        whileInView="visible" // Siempre "visible" para que se rendericen las cards en mobile
         viewport={{ once: false, amount: 0.3 }}
       >
         {servicesData.map((service, index) => (
