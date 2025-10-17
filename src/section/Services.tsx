@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Wrench, Cog, Bolt, Gauge, ChevronRight } from "lucide-react";
 import { servicesTextContent } from "../utils/text-content";
 import { useAppState } from "../store/app-state";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
 const useIsMobile = (breakpoint = 768) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -45,23 +45,6 @@ const Services = () => {
     },
   ];
 
-  // Variants para cards
-  const cardVariants: Variants = isMobile
-    ? { hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } } // Sin animación en mobile
-    : {
-        hidden: { opacity: 0, y: 40 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.6, ease: "easeOut" },
-        },
-      };
-
-  // Variants para container
-  const containerVariants: Variants = isMobile
-    ? { hidden: {}, visible: {} } // No hay stagger en mobile
-    : { hidden: {}, visible: { transition: { staggerChildren: 0.2 } } };
-
   return (
     <section
       id="services"
@@ -72,40 +55,64 @@ const Services = () => {
         {text.title}
       </h2>
 
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible" // Siempre "visible" para que se rendericen las cards en mobile
-        viewport={{ once: false, amount: 0.3 }}
-      >
-        {servicesData.map((service, index) => (
-          <motion.div
-            key={index}
-            className="relative bg-[#121212] rounded-2xl overflow-hidden group shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
-            variants={cardVariants}
-          >
-            {/* Franja superior decorativa */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-[#F0AF54]" />
-
-            {/* Contenido principal */}
-            <div className="p-10 flex flex-col items-center text-center">
-              <div className="mb-6 transition-transform duration-300 group-hover:scale-110">
-                {service.icon}
-              </div>
+      {/* Contenedor de cards */}
+      {isMobile ? (
+        // MOBILE: scroll horizontal sin motion
+        <div className="flex gap-6 overflow-x-auto w-full py-4 px-2 scrollbar-none">
+          {servicesData.map((service, index) => (
+            <div
+              key={index}
+              className="min-w-[250px] flex-shrink-0 relative bg-[#121212] rounded-2xl overflow-hidden shadow-xl p-6 flex flex-col items-center text-center"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-[#F0AF54]" />
+              <div className="mb-6">{service.icon}</div>
               <h3 className="text-xl font-semibold mb-4 text-[#F0AF54] tracking-wide">
                 {service.title}
               </h3>
               <p className="text-gray-300 text-sm leading-relaxed">
                 {service.description}
               </p>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-[2px] bg-[#F0AF54] group-hover:w-3/4 transition-all duration-500" />
             </div>
-
-            {/* Línea inferior animada */}
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-[2px] bg-[#F0AF54] group-hover:w-3/4 transition-all duration-500" />
-          </motion.div>
-        ))}
-      </motion.div>
+          ))}
+        </div>
+      ) : (
+        // DESKTOP: motion con animación y stagger
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        >
+          {servicesData.map((service, index) => (
+            <motion.div
+              key={index}
+              className="relative bg-[#121212] rounded-2xl overflow-hidden group shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: index * 0.2,
+              }}
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-[#F0AF54]" />
+              <div className="p-10 flex flex-col items-center text-center">
+                <div className="mb-6 transition-transform duration-300 group-hover:scale-110">
+                  {service.icon}
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-[#F0AF54] tracking-wide">
+                  {service.title}
+                </h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-[2px] bg-[#F0AF54] group-hover:w-3/4 transition-all duration-500" />
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
     </section>
   );
 };
