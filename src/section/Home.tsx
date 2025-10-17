@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { motion, easeOut } from "framer-motion";
 import type { Variants } from "framer-motion";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -17,6 +18,20 @@ const fadeUp: Variants = {
 export default function Home() {
   const { lang } = useAppState();
   const heroText = heroTextContent(lang);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Intentar reproducir el video al montar
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5; // velocidad reducida opcional
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log("Autoplay prevenido:", error);
+        });
+      }
+    }
+  }, []);
 
   const navigateToServices = () => {
     const servicesSection = document.getElementById("services");
@@ -37,18 +52,21 @@ export default function Home() {
       id="home"
       className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden"
     >
+      {/* Video de fondo */}
       <video
+        ref={videoRef}
         src="/img/fondo.mp4"
         autoPlay
         loop
         muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        ref={(video) => {
-          if (video) video.playbackRate = 0.5;
-        }}
       />
+
+      {/* Overlay oscuro */}
       <div className="absolute inset-0 bg-black/60"></div>
 
+      {/* Contenido principal */}
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center max-w-4xl px-6"
         initial="hidden"
@@ -73,15 +91,11 @@ export default function Home() {
         <motion.div className="flex gap-4 mb-6" variants={fadeUp}>
           <PrimaryButton
             text={heroText.primaryButton}
-            onClick={() => {
-              navigateToServices();
-            }}
+            onClick={navigateToServices}
           />
           <SecondaryButton
             text={heroText.secondaryButton}
-            onClick={() => {
-              navigateToContact();
-            }}
+            onClick={navigateToContact}
           />
         </motion.div>
       </motion.div>
