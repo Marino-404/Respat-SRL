@@ -1,12 +1,26 @@
-import { Wrench, Cog, Bolt, Gauge } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Wrench, Cog, Bolt, Gauge, ChevronRight } from "lucide-react";
 import { servicesTextContent } from "../utils/text-content";
 import { useAppState } from "../store/app-state";
 import { motion, type Variants } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+
+const useIsMobile = (breakpoint = 768) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => setIsMobile(window.innerWidth < breakpoint);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, [breakpoint]);
+
+  return isMobile;
+};
 
 const Services = () => {
   const { lang } = useAppState();
   const text = servicesTextContent(lang);
+  const isMobile = useIsMobile();
 
   const servicesData = [
     {
@@ -31,21 +45,22 @@ const Services = () => {
     },
   ];
 
-  // Variants de cada card
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
+  // Variants para cards
+  const cardVariants: Variants = isMobile
+    ? { hidden: {}, visible: {} } // Sin animación en mobile
+    : {
+        hidden: { opacity: 0, y: 40 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.6, ease: "easeOut" },
+        },
+      };
 
-  // Variants para stagger de las cards
-  const containerVariants: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.2 } },
-  };
+  // Variants para container
+  const containerVariants: Variants = isMobile
+    ? { hidden: {}, visible: {} }
+    : { hidden: {}, visible: { transition: { staggerChildren: 0.2 } } };
 
   return (
     <section
@@ -61,7 +76,7 @@ const Services = () => {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl"
         variants={containerVariants}
         initial="hidden"
-        whileInView="visible"
+        whileInView={isMobile ? undefined : "visible"}
         viewport={{ once: false, amount: 0.3 }}
       >
         {servicesData.map((service, index) => (

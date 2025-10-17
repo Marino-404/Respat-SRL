@@ -20,16 +20,24 @@ export default function Home() {
   const heroText = heroTextContent(lang);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Intentar reproducir el video al montar
+  // Forzar reproducción y velocidad reducida
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 0.5; // velocidad reducida opcional
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
+      const video = videoRef.current;
+
+      // Cuando el video esté cargado, ajustamos playbackRate y reproducimos
+      const handleCanPlay = () => {
+        video.playbackRate = 0.5; // velocidad 0.5x
+        video.play().catch((error) => {
           console.log("Autoplay prevenido:", error);
         });
-      }
+      };
+
+      video.addEventListener("canplay", handleCanPlay);
+
+      return () => {
+        video.removeEventListener("canplay", handleCanPlay);
+      };
     }
   }, []);
 
