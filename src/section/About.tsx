@@ -43,17 +43,6 @@ const About = () => {
       id="about"
       className="relative w-full min-h-screen flex flex-col items-center justify-center text-black overflow-hidden"
     >
-      {/* 🎥 Fondo con video o imagen sutil */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-10"
-      >
-        <source src="/videos/industry.mp4" type="video/mp4" />
-      </video>
-
       {/* 🎨 Degradado de fondo suave */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#FFB84D]/90 via-[#FFD580]/80 to-[#FFF3D6]/90 z-0" />
 
