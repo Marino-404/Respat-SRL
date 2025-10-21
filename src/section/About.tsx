@@ -1,11 +1,42 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useAppState } from "../store/app-state";
 import { aboutTextContent } from "../utils/text-content";
-import { Target, Eye, HeartHandshake } from "lucide-react";
+import { Target, Eye, HeartHandshake, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const About = () => {
   const { lang } = useAppState();
   const text = aboutTextContent(lang);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  // Detectar si es mobile (idéntico a Services)
+  useEffect(() => {
+    const checkMobile = () => {
+      const touch =
+        window.matchMedia("(hover: none) and (pointer: coarse)").matches ||
+        window.innerWidth < 768;
+      setIsMobile(touch);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.2 } },
+  };
 
   return (
     <section
@@ -35,6 +66,7 @@ const About = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true, amount: 0.3 }}
         >
+          <ChevronRight className="inline-block text-secondary" />
           {text.mainTitle}
         </motion.h2>
 
@@ -68,9 +100,25 @@ const About = () => {
         />
 
         {/* 🧩 Bloques de política y valores */}
-        <div className="grid md:grid-cols-3 gap-8 w-full mb-20">
+        <motion.div
+          className="grid md:grid-cols-3 gap-8 w-full mb-20"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isMobile && hasAnimated ? "visible" : undefined}
+          whileInView={!isMobile || !hasAnimated ? "visible" : undefined}
+          viewport={{
+            once: isMobile,
+            amount: 0.3,
+          }}
+          onViewportEnter={() => {
+            if (isMobile && !hasAnimated) {
+              setHasAnimated(true);
+            }
+          }}
+        >
           {/* Misión */}
           <motion.div
+            variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 120 }}
             className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10 "
@@ -86,6 +134,7 @@ const About = () => {
 
           {/* Visión */}
           <motion.div
+            variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 120 }}
             className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10 "
@@ -101,6 +150,7 @@ const About = () => {
 
           {/* Valores */}
           <motion.div
+            variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 120 }}
             className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10 "
@@ -121,8 +171,17 @@ const About = () => {
               ))}
             </ul>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
+
+      {/* 🧭 Línea de tiempo vertical de fondo */}
+      <motion.div
+        className="absolute left-[50%] md:left-[15%] top-0 w-[3px] bg-black/10 origin-top z-0"
+        style={{ scaleY: 0 }}
+        initial={{ scaleY: 0 }}
+        whileInView={{ scaleY: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      />
 
       {/* 🌊 Separador ondulado */}
       <svg

@@ -64,25 +64,25 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-black text-white px-2 py-20"
+      className="relative w-full min-h-screen flex flex-col items-center justify-center text-white px-2 py-20 overflow-hidden"
     >
-      <h2 className="text-4xl xl:text-5xl font-bold mb-16 text-center tracking-wide">
+      {/* Fondo con textura diagonal */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#121212] to-[#1c1c1c] opacity-95" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(240,175,84,0.05),transparent_60%)]" />
+
+      <h2 className="relative text-4xl xl:text-5xl font-bold mb-16 text-center tracking-wide z-10">
         <ChevronRight className="inline-block text-secondary" />
         {text.title}
       </h2>
 
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl"
+        className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl z-10"
         variants={containerVariants}
         initial="hidden"
-        animate={
-          isMobile && hasAnimated
-            ? "visible" // Si ya animó, queda visible siempre
-            : undefined
-        }
+        animate={isMobile && hasAnimated ? "visible" : undefined}
         whileInView={!isMobile || !hasAnimated ? "visible" : undefined}
         viewport={{
-          once: isMobile, // Solo una vez en mobile
+          once: isMobile,
           amount: 0.3,
         }}
         onViewportEnter={() => {
@@ -94,7 +94,7 @@ const Services = () => {
         {servicesData.map((service, index) => (
           <motion.div
             key={index}
-            className="relative bg-[#121212] rounded-2xl overflow-hidden group shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl cursor-pointer"
+            className="relative bg-[#121212]/90 rounded-2xl overflow-hidden group shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl cursor-pointer backdrop-blur-sm"
             variants={cardVariants}
           >
             <div className="absolute top-0 left-0 w-full h-1 bg-[#F0AF54]" />
