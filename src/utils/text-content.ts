@@ -199,3 +199,41 @@ export const galleryTextContent = (lang = true) => {
     };
   }
 };
+
+export const footerTextContent = (lang = true) => {
+  if (lang) {
+    return {
+      sectionsTitle: "Secciones",
+      contactTitle: "Contacto",
+      brandDescription:
+        "Innovación y compromiso en cada proyecto. Construyendo con calidad y pasión desde el primer día.",
+      rights: "Todos los derechos reservados.",
+      location: "Rosario, Santa Fe",
+      phone: "+54 9 3416 03-0702",
+      email: "contacto@respat.com",
+      sections: {
+        home: "Inicio",
+        about: "Nosotros",
+        services: "Servicios",
+        contact: "Contacto",
+      },
+    };
+  } else {
+    return {
+      sectionsTitle: "Sections",
+      contactTitle: "Contact",
+      brandDescription:
+        "Innovation and commitment in every project. Building with quality and passion from day one.",
+      rights: "All rights reserved.",
+      location: "Rosario, Santa Fe",
+      phone: "+54 9 3416 03-0702",
+      email: "contact@respat.com",
+      sections: {
+        home: "Home",
+        about: "About Us",
+        services: "Services",
+        contact: "Contact",
+      },
+    };
+  }
+};
