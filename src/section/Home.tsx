@@ -19,26 +19,59 @@ export default function Home() {
   const { lang } = useAppState();
   const heroText = heroTextContent(lang);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
-  // Forzar reproducción y velocidad reducida
+  // 🎬 Ralentización progresiva del video + fade sincronizado del overlay
   useEffect(() => {
-    if (videoRef.current) {
-      const video = videoRef.current;
+    const video = videoRef.current;
+    const overlay = overlayRef.current;
+    if (!video || !overlay) return;
 
-      // Cuando el video esté cargado, ajustamos playbackRate y reproducimos
-      const handleCanPlay = () => {
-        video.playbackRate = 0.5; // velocidad 0.5x
-        video.play().catch((error) => {
-          console.log("Autoplay prevenido:", error);
-        });
+    const slowDown = () => {
+      let currentRate = 1; // velocidad inicial
+      const targetRate = 0.5; // velocidad final
+      const step = 0.02; // velocidad de cambio
+      let opacity = 1; // opacidad inicial del overlay
+      const targetOpacity = 0.7; // opacidad final
+
+      const animate = () => {
+        if (currentRate > targetRate) {
+          currentRate -= step;
+          opacity -= (1 - targetOpacity) * step; // reducimos opacidad suavemente
+
+          video.playbackRate = currentRate;
+          overlay.style.backgroundColor = `rgba(0, 0, 0, ${opacity.toFixed(
+            2
+          )})`;
+
+          requestAnimationFrame(animate);
+        } else {
+          video.playbackRate = targetRate;
+          overlay.style.backgroundColor = `rgba(0, 0, 0, ${targetOpacity})`;
+        }
       };
 
-      video.addEventListener("canplay", handleCanPlay);
+      animate();
+    };
 
-      return () => {
-        video.removeEventListener("canplay", handleCanPlay);
-      };
-    }
+    const handlePlaying = () => {
+      slowDown();
+    };
+
+    const startVideo = async () => {
+      try {
+        await video.play();
+      } catch (err) {
+        console.log("Autoplay bloqueado:", err);
+      }
+    };
+
+    video.addEventListener("playing", handlePlaying);
+    startVideo();
+
+    return () => {
+      video.removeEventListener("playing", handlePlaying);
+    };
   }, []);
 
   const navigateToServices = () => {
@@ -60,7 +93,7 @@ export default function Home() {
       id="home"
       className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden"
     >
-      {/* Video de fondo */}
+      {/* 🎥 Video de fondo */}
       <video
         ref={videoRef}
         src="/img/fondo.mp4"
@@ -71,10 +104,10 @@ export default function Home() {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Overlay oscuro */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      {/* 🌘 Overlay con fade progresivo */}
+      <div ref={overlayRef} className="absolute inset-0 bg-black"></div>
 
-      {/* Contenido principal */}
+      {/* 🌟 Contenido principal */}
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center max-w-4xl px-6"
         initial="hidden"
