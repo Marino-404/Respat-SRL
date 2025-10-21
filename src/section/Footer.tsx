@@ -1,4 +1,3 @@
-import React from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { footerTextContent } from "../utils/text-content";
 import { useAppState } from "../store/app-state";
