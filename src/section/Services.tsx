@@ -1,12 +1,27 @@
-import { Wrench, Cog, Bolt, Gauge } from "lucide-react";
+import { Wrench, Cog, Bolt, Gauge, ChevronRight } from "lucide-react";
 import { servicesTextContent } from "../utils/text-content";
 import { useAppState } from "../store/app-state";
 import { motion, type Variants } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Services = () => {
   const { lang } = useAppState();
   const text = servicesTextContent(lang);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detectar dispositivo táctil o ancho de pantalla
+  useEffect(() => {
+    const checkMobile = () => {
+      const touch =
+        window.matchMedia("(hover: none) and (pointer: coarse)").matches ||
+        window.innerWidth < 768;
+      setIsMobile(touch);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const servicesData = [
     {
@@ -62,7 +77,7 @@ const Services = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: isMobile, amount: 0.3 }}
       >
         {servicesData.map((service, index) => (
           <motion.div
@@ -70,10 +85,8 @@ const Services = () => {
             className="relative bg-[#121212] rounded-2xl overflow-hidden group shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl cursor-pointer"
             variants={cardVariants}
           >
-            {/* Franja superior decorativa */}
             <div className="absolute top-0 left-0 w-full h-1 bg-[#F0AF54]" />
 
-            {/* Contenido principal */}
             <div className="p-10 flex flex-col items-center text-center">
               <div className="mb-6 transition-transform duration-300 group-hover:scale-110">
                 {service.icon}
@@ -86,7 +99,6 @@ const Services = () => {
               </p>
             </div>
 
-            {/* Línea inferior animada */}
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-[2px] bg-[#F0AF54] group-hover:w-3/4 transition-all duration-500" />
           </motion.div>
         ))}
