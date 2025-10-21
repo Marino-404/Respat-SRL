@@ -64,7 +64,7 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-black text-white px-6 py-20"
+      className="w-full min-h-screen flex flex-col items-center justify-center bg-black text-white px-2 py-20"
     >
       <h2 className="text-4xl xl:text-5xl font-bold mb-16 text-center tracking-wide">
         <ChevronRight className="inline-block text-secondary" />

@@ -89,3 +89,113 @@ export const servicesTextContent = (lang = true) => {
     };
   }
 };
+
+export const aboutTextContent = (lang = true) => {
+  if (lang) {
+    return {
+      mainTitle: "Sobre Nosotros",
+      intro:
+        "En RESPAT S.R.L. nos especializamos desde hace más de 15 años en Montajes industriales, Construcción y Mantenimiento de Plantas Industriales.",
+      description:
+        "Gracias a nuestro equipo de profesionales altamente calificado, somos una empresa en constante desarrollo que posee distintas áreas cuya interacción nos permite aumentar nuestra eficiencia así como también proporcionar un servicio reconocido por nuestros clientes.",
+      policyTitle: "Política y Valores",
+      mission: {
+        title: "Misión",
+        text: "Brindar soluciones industriales seguras, eficientes y sustentables, combinando experiencia técnica e innovación para acompañar a nuestros clientes en su crecimiento.",
+      },
+      vision: {
+        title: "Visión",
+        text: "Ser una empresa referente en montajes y mantenimiento industrial, reconocida por su excelencia, compromiso y responsabilidad ambiental.",
+      },
+      values: {
+        title: "Valores",
+        list: [
+          "Orientación al cliente",
+          "Compromiso con los resultados",
+          "Trabajo en equipo",
+          "Integridad y seguridad",
+          "Responsabilidad ambiental",
+        ],
+      },
+    };
+  } else {
+    return {
+      mainTitle: "About Us",
+      intro:
+        "At RESPAT S.R.L., we have specialized for over 15 years in Industrial Assemblies, Construction, and Maintenance of Industrial Plants.",
+      description:
+        "Thanks to our highly qualified team of professionals, we are a constantly developing company with different areas whose interaction allows us to increase our efficiency and provide a service recognized by our clients.",
+      policyTitle: "Policy and Values",
+      mission: {
+        title: "Mission",
+        text: "Provide safe, efficient, and sustainable industrial solutions, combining technical expertise and innovation to support our clients’ growth.",
+      },
+      vision: {
+        title: "Vision",
+        text: "To be a leading company in industrial assembly and maintenance, recognized for its excellence, commitment, and environmental responsibility.",
+      },
+      values: {
+        title: "Values",
+        list: [
+          "Customer orientation",
+          "Commitment to results",
+          "Teamwork",
+          "Integrity and safety",
+          "Environmental responsibility",
+        ],
+      },
+    };
+  }
+};
+
+export const galleryTextContent = (lang = true) => {
+  if (lang) {
+    return {
+      mainTitle: "Galería de Proyectos",
+      sections: [
+        {
+          title: "Montajes Industriales",
+          description:
+            "Realizamos montajes industriales de alta complejidad, adaptándonos a los requerimientos de cada planta y garantizando seguridad, precisión y cumplimiento de plazos.",
+          button: "Ver más",
+        },
+        {
+          title: "Mantenimiento de Plantas",
+          description:
+            "Ofrecemos servicios integrales de mantenimiento preventivo y correctivo, optimizando los tiempos de producción y asegurando el funcionamiento continuo de las instalaciones.",
+          button: "Ver más",
+        },
+        {
+          title: "Obras Civiles",
+          description:
+            "Desarrollamos obras civiles asociadas a la industria, priorizando la eficiencia constructiva, la calidad de materiales y la sustentabilidad en cada proyecto.",
+          button: "Ver más",
+        },
+      ],
+    };
+  } else {
+    return {
+      mainTitle: "Project Gallery",
+      sections: [
+        {
+          title: "Industrial Assemblies",
+          description:
+            "We carry out complex industrial assemblies, adapting to each plant’s requirements while ensuring safety, precision, and on-time delivery.",
+          button: "See more",
+        },
+        {
+          title: "Plant Maintenance",
+          description:
+            "We provide comprehensive preventive and corrective maintenance services, optimizing production times and ensuring continuous operation of facilities.",
+          button: "See more",
+        },
+        {
+          title: "Civil Works",
+          description:
+            "We develop civil works associated with industry, prioritizing construction efficiency, material quality, and sustainability in every project.",
+          button: "See more",
+        },
+      ],
+    };
+  }
+};
