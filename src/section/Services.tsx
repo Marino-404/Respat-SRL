@@ -9,8 +9,9 @@ const Services = () => {
   const text = servicesTextContent(lang);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
-  // Detectar dispositivo táctil o ancho de pantalla
+  // Detectar si es mobile
   useEffect(() => {
     const checkMobile = () => {
       const touch =
@@ -46,7 +47,6 @@ const Services = () => {
     },
   ];
 
-  // Variants de cada card
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
@@ -56,7 +56,6 @@ const Services = () => {
     },
   };
 
-  // Variants para stagger de las cards
   const containerVariants: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.2 } },
@@ -76,8 +75,21 @@ const Services = () => {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl"
         variants={containerVariants}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: isMobile, amount: 0.3 }}
+        animate={
+          isMobile && hasAnimated
+            ? "visible" // Si ya animó, queda visible siempre
+            : undefined
+        }
+        whileInView={!isMobile || !hasAnimated ? "visible" : undefined}
+        viewport={{
+          once: isMobile, // Solo una vez en mobile
+          amount: 0.3,
+        }}
+        onViewportEnter={() => {
+          if (isMobile && !hasAnimated) {
+            setHasAnimated(true);
+          }
+        }}
       >
         {servicesData.map((service, index) => (
           <motion.div
@@ -86,7 +98,6 @@ const Services = () => {
             variants={cardVariants}
           >
             <div className="absolute top-0 left-0 w-full h-1 bg-[#F0AF54]" />
-
             <div className="p-10 flex flex-col items-center text-center">
               <div className="mb-6 transition-transform duration-300 group-hover:scale-110">
                 {service.icon}
@@ -98,7 +109,6 @@ const Services = () => {
                 {service.description}
               </p>
             </div>
-
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-[2px] bg-[#F0AF54] group-hover:w-3/4 transition-all duration-500" />
           </motion.div>
         ))}
