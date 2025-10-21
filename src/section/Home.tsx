@@ -19,73 +19,52 @@ export default function Home() {
   const { lang } = useAppState();
   const heroText = heroTextContent(lang);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
 
-  // 🎬 Ralentización progresiva del video + fade sincronizado del overlay
+  // 🎬 Mantener el video lento todo el tiempo
   useEffect(() => {
     const video = videoRef.current;
-    const overlay = overlayRef.current;
-    if (!video || !overlay) return;
+    if (!video) return;
 
-    const slowDown = () => {
-      let currentRate = 1; // velocidad inicial
-      const targetRate = 0.5; // velocidad final
-      const step = 0.02; // velocidad de cambio
-      let opacity = 1; // opacidad inicial del overlay
-      const targetOpacity = 0.7; // opacidad final
-
-      const animate = () => {
-        if (currentRate > targetRate) {
-          currentRate -= step;
-          opacity -= (1 - targetOpacity) * step; // reducimos opacidad suavemente
-
-          video.playbackRate = currentRate;
-          overlay.style.backgroundColor = `rgba(0, 0, 0, ${opacity.toFixed(
-            2
-          )})`;
-
-          requestAnimationFrame(animate);
-        } else {
-          video.playbackRate = targetRate;
-          overlay.style.backgroundColor = `rgba(0, 0, 0, ${targetOpacity})`;
-        }
-      };
-
-      animate();
+    const setSlowPlayback = () => {
+      // aplicamos con un leve retraso para garantizar que el video ya está reproduciendo
+      setTimeout(() => {
+        video.playbackRate = 0.5; // 🎬 velocidad lenta
+        console.log("Velocidad aplicada:", video.playbackRate);
+      }, 200);
     };
 
-    const handlePlaying = () => {
-      slowDown();
-    };
-
-    const startVideo = async () => {
+    // intentar reproducir (por si el autoplay falla)
+    const tryPlay = async () => {
       try {
         await video.play();
       } catch (err) {
-        console.log("Autoplay bloqueado:", err);
+        console.warn("Autoplay bloqueado:", err);
       }
     };
 
-    video.addEventListener("playing", handlePlaying);
-    startVideo();
+    video.addEventListener("playing", setSlowPlayback);
+    video.addEventListener("loadeddata", setSlowPlayback);
+    video.addEventListener("loadedmetadata", setSlowPlayback);
+    video.addEventListener("timeupdate", setSlowPlayback); // refuerzo extra
+
+    tryPlay();
 
     return () => {
-      video.removeEventListener("playing", handlePlaying);
+      video.removeEventListener("playing", setSlowPlayback);
+      video.removeEventListener("loadeddata", setSlowPlayback);
+      video.removeEventListener("loadedmetadata", setSlowPlayback);
+      video.removeEventListener("timeupdate", setSlowPlayback);
     };
   }, []);
 
   const navigateToServices = () => {
-    const servicesSection = document.getElementById("services");
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: "smooth" });
-    }
+    const section = document.getElementById("services");
+    section?.scrollIntoView({ behavior: "smooth" });
   };
 
   const navigateToContact = () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
+    const section = document.getElementById("contact");
+    section?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -93,7 +72,7 @@ export default function Home() {
       id="home"
       className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden"
     >
-      {/* 🎥 Video de fondo */}
+      {/* 🎥 Video de fondo lento */}
       <video
         ref={videoRef}
         src="/img/fondo.mp4"
@@ -101,11 +80,13 @@ export default function Home() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        controls={false}
+        disablePictureInPicture
+        className="absolute inset-0 w-full h-full object-cover object-top"
       />
 
-      {/* 🌘 Overlay con fade progresivo */}
-      <div ref={overlayRef} className="absolute inset-0 bg-black"></div>
+      {/* 🌘 Overlay más sutil */}
+      <div className="absolute inset-0 bg-black/80" />
 
       {/* 🌟 Contenido principal */}
       <motion.div
