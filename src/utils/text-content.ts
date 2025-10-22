@@ -208,9 +208,10 @@ export const footerTextContent = (lang = true) => {
       brandDescription:
         "Innovación y compromiso en cada proyecto. Construyendo con calidad y pasión desde el primer día.",
       rights: "Todos los derechos reservados.",
-      location: "Rosario, Santa Fe",
-      phone: "+54 9 3416 03-0702",
-      email: "contacto@respat.com",
+      rights2: "Diseñado y desarrollado por",
+      location: "Rosario, Santa Fe, Argentina",
+      phone: "+54 341 156950630",
+      email: "info@soldadurasrespat.com.ar",
       sections: {
         home: "Inicio",
         about: "Nosotros",
@@ -225,15 +226,51 @@ export const footerTextContent = (lang = true) => {
       brandDescription:
         "Innovation and commitment in every project. Building with quality and passion from day one.",
       rights: "All rights reserved.",
-      location: "Rosario, Santa Fe",
-      phone: "+54 9 3416 03-0702",
-      email: "contact@respat.com",
+      rights2: "Designed and developed by",
+      location: "Rosario, Santa Fe, Argentina",
+      phone: "+54 341 156950630",
+      email: "info@soldadurasrespat.com.ar",
       sections: {
         home: "Home",
         about: "About Us",
         services: "Services",
         contact: "Contact",
       },
+    };
+  }
+};
+
+export const infrastructureTextContent = (lang = true) => {
+  if (lang) {
+    return {
+      title: "Infraestructura y Recursos",
+      description:
+        "Disponemos de recursos propios que garantizan una gestión ágil, eficiente y totalmente autónoma en cada proyecto.",
+      list: [
+        "Taller principal de fabricación y montaje totalmente equipado",
+        "Taller de pintura con capacidad de arenado",
+        "Vehículos propios",
+        "Equipos HILTI",
+        "Personal especializado y calificado",
+        "Equipos especializados propios",
+      ],
+      footnote:
+        "*generadores, compresores, gatos hidráulicos, herramientas de precisión.",
+    };
+  } else {
+    return {
+      title: "Infrastructure and Resources",
+      description:
+        "We have our own resources to ensure agile, efficient, and fully autonomous management in every project.",
+      list: [
+        "Main fabrication and assembly workshop fully equipped",
+        "Paint shop with sandblasting capability",
+        "Own vehicles",
+        "HILTI equipment",
+        "Specialized and qualified personnel",
+        "Own specialized equipment",
+      ],
+      footnote: "*generators, compressors, hydraulic jacks, precision tools.",
     };
   }
 };
