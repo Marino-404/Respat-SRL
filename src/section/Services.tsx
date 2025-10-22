@@ -3,7 +3,6 @@ import { servicesTextContent } from "../utils/text-content";
 import { useAppState } from "../store/app-state";
 import { motion, type Variants } from "framer-motion";
 import { useEffect, useState } from "react";
-import ClientsCarousel from "../components/ui/ClientsCarousel";
 
 const Services = () => {
   const { lang } = useAppState();
