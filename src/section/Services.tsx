@@ -3,6 +3,7 @@ import { servicesTextContent } from "../utils/text-content";
 import { useAppState } from "../store/app-state";
 import { motion, type Variants } from "framer-motion";
 import { useEffect, useState } from "react";
+import ClientsCarousel from "../components/ui/ClientsCarousel";
 
 const Services = () => {
   const { lang } = useAppState();
@@ -70,10 +71,17 @@ const Services = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#121212] to-[#1c1c1c] opacity-95" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(240,175,84,0.05),transparent_60%)]" />
 
-      <h2 className="relative text-4xl xl:text-5xl font-bold mb-16 text-center tracking-wide z-10">
+      <motion.h2
+        className="text-4xl md:text-5xl font-bold mb-16 tracking-wide z-10"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        {" "}
         <ChevronRight className="inline-block text-secondary" />
         {text.title}
-      </h2>
+      </motion.h2>
 
       <motion.div
         className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl z-10"

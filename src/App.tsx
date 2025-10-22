@@ -5,6 +5,7 @@ import Services from "./section/Services";
 import Contact from "./section/Contact";
 import Footer from "./section/Footer";
 import ParallaxDivider from "./components/ui/ParallaxDivider";
+import ClientsCarousel from "./components/ui/ClientsCarousel";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <About />
       <ParallaxDivider image="/img/soldadura1.jpg" />
       <Services />
+      <ClientsCarousel />
       <Contact />
       <Footer />
     </>

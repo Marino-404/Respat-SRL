@@ -49,3 +49,16 @@ body {
   background: var(--color-secondary);
   color: var(--color-black);
 }
+
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scroll-marquee {
+  animation: scroll-horizontal 20s linear infinite;
+}
