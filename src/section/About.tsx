@@ -43,13 +43,13 @@ const About = () => {
       id="about"
       className="relative w-full min-h-screen flex flex-col items-center justify-center text-black overflow-hidden"
     >
-      {/* 🎨 Degradado de fondo suave */}
+      {/* Degradado de fondo suave */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#FFB84D]/90 via-[#FFD580]/80 to-[#FFF3D6]/90 z-0" />
 
       <div className="relative z-10 max-w-6xl w-full px-6 py-24 flex flex-col items-center text-center">
-        {/* 🧱 Encabezado */}
+        {/* Encabezado */}
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-10 tracking-wide "
+          className="text-4xl md:text-5xl font-bold mb-10 tracking-wide"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -79,7 +79,7 @@ const About = () => {
           {text.description}
         </motion.p>
 
-        {/* 🟡 Línea divisoria */}
+        {/* Línea divisoria */}
         <motion.div
           className="w-24 h-[3px] bg-black mb-16 rounded-full"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -88,7 +88,7 @@ const About = () => {
           viewport={{ once: true, amount: 0.3 }}
         />
 
-        {/* 🧩 Bloques de política y valores */}
+        {/* Bloques de política y valores */}
         <motion.div
           className="grid md:grid-cols-3 gap-8 w-full mb-20"
           variants={containerVariants}
@@ -110,7 +110,7 @@ const About = () => {
             variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 120 }}
-            className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10 "
+            className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10"
           >
             <Target className="w-10 h-10 text-black mb-4 mx-auto" />
             <h3 className="text-2xl font-semibold mb-4 uppercase">
@@ -126,7 +126,7 @@ const About = () => {
             variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 120 }}
-            className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10 "
+            className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10"
           >
             <Eye className="w-10 h-10 text-black mb-4 mx-auto" />
             <h3 className="text-2xl font-semibold mb-4 uppercase">
@@ -142,7 +142,7 @@ const About = () => {
             variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 120 }}
-            className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10 "
+            className="cursor-pointer bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-black/10"
           >
             <HeartHandshake className="w-10 h-10 text-black mb-4 mx-auto" />
             <h3 className="text-2xl font-semibold mb-4 uppercase">
@@ -163,26 +163,28 @@ const About = () => {
         </motion.div>
       </div>
 
-      {/* 🧭 Línea de tiempo vertical de fondo */}
-      <motion.div
-        className="absolute left-[50%] md:left-[15%] top-0 w-[3px] bg-black/10 origin-top z-0"
-        style={{ scaleY: 0 }}
-        initial={{ scaleY: 0 }}
-        whileInView={{ scaleY: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-      />
-
-      {/* 🌊 Separador ondulado */}
-      <svg
-        className="absolute bottom-0 left-0 w-full text-secondary"
-        viewBox="0 0 1440 320"
-        fill="currentColor"
-      >
-        <path
-          fillOpacity="1"
-          d="M0,96L48,128C96,160,192,224,288,229.3C384,235,480,181,576,149.3C672,117,768,107,864,128C960,149,1056,203,1152,218.7C1248,235,1344,213,1392,202.7L1440,192L1440,320L0,320Z"
-        ></path>
-      </svg>
+      {/* Separador minimalista curvo (versión más alta) */}
+      <div className="absolute bottom-[-1px] left-0 w-full overflow-hidden">
+        <svg
+          className="w-full h-28 sm:h-32 md:h-36 lg:h-40"
+          viewBox="0 0 1440 250"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          {/* Fondo oscuro */}
+          <path
+            fill="#1c1c1c"
+            d="M0,120 Q360,190 720,120 T1440,120 L1440,250 L0,250Z"
+          />
+          {/* Línea dorada */}
+          <path
+            d="M0,120 Q360,190 720,120 T1440,120"
+            stroke="#f0af54"
+            strokeWidth="3"
+            fill="none"
+          />
+        </svg>
+      </div>
     </section>
   );
 };

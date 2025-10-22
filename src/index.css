@@ -12,11 +12,11 @@ body {
 }
 
 @theme {
-  --color-primary: #092c4e;
-  --color-secondary: #f0af54;
-  --color-detail: #ccc3bc;
-  --color-white: #f5f3f0; /* blanco cremoso, cálido y suave */
-  --color-black: #1c1c1c; /* negro no tan oscuro, más amigable */
+  --color-primary: #092c4e; /* azul oscuro */
+  --color-secondary: #f0af54; /* amarillo suave */
+  --color-detail: #ccc3bc; /* beige claro */
+  --color-white: #f5f3f0; /* blanco cremoso */
+  --color-black: #1c1c1c; /* negro no tan oscuro */
 }
 
 .nav-underline {
